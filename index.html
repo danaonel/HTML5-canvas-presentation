@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>HTML5 Canvas Presentation</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+	<script type="text/javascript">
+		if ( document.addEventListener ) {
+		  document.addEventListener( "DOMContentLoaded", function(){
+			document.removeEventListener( "DOMContentLoaded", arguments.callee, false);
+			drawRectangle();
+			drawCircle();
+			drawSmiley();
+			drawCubicCurve();
+			drawQuadCurve();
+			drawHeart();
+			drawRedHeart();
+			drawPinkHeart();
+			drawGradientHeart();
+			drawText();
+			drawTextShadow();
+		  }, false );
+
+		// If IE event model is used
+		} else if ( document.attachEvent ) {
+		  // ensure firing before onload
+		  document.attachEvent("onreadystatechange", function(){
+			if ( document.readyState === "complete" ) {
+			  document.detachEvent( "onreadystatechange", arguments.callee );
+			  drawRectangle();
+			  drawCircle();
+			  drawSmiley();
+			  drawCubicCurve();
+			  drawQuadCurve();
+			  drawHeart();
+			  drawRedHeart();
+			  drawPinkHeart();
+			  drawGradientHeart();
+			  drawText();
+			  drawTextShadow();
+			}
+		  });
+		}
+	</script>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>HTML5 Canvas</h1>
+					<h3>Definition</h3>
+					<p>
+						<small>&#60;canvas&#62; is an HTML5 element used to draw graphics, on the fly, via scripting (usually JavaScript).<br />
+						Source: <a href="http://www.w3schools.com/html/html5_canvas.asp">http://www.w3schools.com/html/html5_canvas.asp</a><br />The &#60;canvas&#62; element has no drawing abilities of its own (it is only a container for graphics) - you must use a script to actually draw the graphics.<br />
+						It can, for instance, be used to draw graphs, make photo compositions or do simple (and not so simple) animations. </small></p>
+					
+				</section>
+
+				<section>
+					<h2>&#60;canvas&#62; attributes</h2>
+					
+					<p class="fragment roll-in">
+						<small><em>&#60;canvas&#62;</em> element has only two attributes - <strong>width</strong> and <strong>height</strong>.<br />
+						These are both optional and can also be set using DOM properties. When no width and height attributes are specified, the canvas will initially be 300 pixels wide and 150 pixels high.<br /><br />
+						The element can be sized arbitrarily by CSS, but during rendering the image is scaled to fit its layout size.<br /><br />
+						Closing <em>&#60;/canvas&#62;</em> is required by HTML5 standards.</small></p>
+					<p class="fragment roll-in"><small>
+						Canvas can be styled by CSS, but the graphics inside the canvas will not be affected. Without any javascript, canvas is a transparent element.</small></p>
+					<p class="fragment roll-in"><small><strong>Fallback content</strong> can be specified between opening &#60;canvas&#62; and closing &#60;/canvas&#62;.
+						</small>
+					</p>
+<pre class="fragment roll-in">
+<code>
+<canvas id="some-canvas" width="150" height="150">Fallback content</canvas>
+</code>
+</pre>
+					
+
+					<aside class="notes">
+						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					</aside>
+				</section>
+					
+				<section>
+					<section>
+					<h2><span style="text-transform:lowercase;">get</span>C<span style="text-transform:lowercase;">ontext</span>() method</h2>
+						<p class="fragment roll-in">
+							<small>
+								In order to draw graphics on the canvas, we need to use javascript <strong>getContext()</strong> method. This returns an object that provides methods and properties for drawing on the canvas.</small></p>
+						<p class="fragment roll-in"><small><em>getContext()</em> method takes one parameter, the type of context. There can be <em>"2d"</em>  or <em>"webgl"</em> contexts. This presentation focuses on the "2d" context. 
+							</small>
+						</p>
+<pre class="fragment roll-in">
+<code>
+<canvas id="some-canvas" width="150" height="150">Fallback content</canvas>
+<script type="text/javascript">
+var canvas = document.getElementById('tutorial');
+var ctx = canvas.getContext('2d');
+</script>
+</code>
+</pre>
+						<p class="fragment roll-in">
+							<small>
+								<em>ctx</em> now has access to all the drawing methods.
+							</small>
+						</p>
+					</section>
+					<section>
+						<h2>Checking for browser support</h2>
+						<p class="fragment roll-in">
+							<small>
+								The fallback content is displayed in browsers which do not support <em>&#60;canvas&#62;</em>. Scripts can also check for support programatically by simply testing for the presence of the <em>getContext()</em> method. 
+							</small>
+						</p>
+<pre class="fragment roll-in">
+<code data-trim>
+<canvas id="some-canvas" width="150" height="150">Fallback content</canvas>
+<script type="text/javascript">
+var canvas = document.getElementById('tutorial');
+if (canvas.getContext){
+  var ctx = canvas.getContext('2d');
+  // drawing code here
+} else {
+  // canvas-unsupported code here
+}
+</script>
+</code>
+</pre>
+					</section>
+					<section>
+						<h2>Browser support</h2>
+						<p><small>Canvas was first introduced by Apple for the Mac OS X Dashboard and later implemented in Safari and Google Chrome.<br /></small></p>
+						<table cellpadding="0" cellspacing="0">
+							<thead>
+								<tr>
+									<th width="65%"><small>Supported browsers</small></th>
+									<th width="35%"><small>Unsupported browsers</small></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><small>Internet Explorer 9</small></td>
+									<td><small>Internet Explorer 8 and earlier</small></td>
+								</tr>
+								<tr>
+									<td><small>Firefox</small></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><small>Opera</small></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><small>Chrome</small></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><small>Safari</small></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><small>Gecko 1.8-based browsers, such as Firefox 1.5</small></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>The canvas grid</h2>
+						<p class="fragment roll-in">
+							<small>
+								1 unit in the grid corresponds to 1 pixel on the canvas.<br /><br />
+								The top left corner corresponds to coordinate (0,0)). All elements are placed relative to this origin.
+							</small>
+						</p>
+						<p class="fragment roll-in">
+							<img src="img/grid.png" />
+						</p>
+					</section>
+					<section>
+						<h2>Rectangles, circles, lines and curvess</h2>
+						<p><small><em>&#60;canvas&#62;</em> only supports one primitive shape: <span style="text-decoration: underline;">rectangles</span>. All other shapes must be created by combining one or more paths. We can use several path drawing functions which make it possible to compose very complex shapes. We can have linear paths, arcs and bezier curve paths.</small></p>
+					</section>
+				</section>
+				<section>
+					<section>
+					<h2>Rectangles</h2>
+						<p><small>There are three functions that draw rectangles on the canvas:<br /></small></p>
+						<table cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="30%"><small><em>fillRect(x, y, width, height)</em></small></td>
+								<td width="70%"><small>Draws a filled rectangle.</small></td>
+							</tr>
+							<tr>
+								<td><small><em>strokeRect(x, y, width, height)<em></small></td>
+								<td><small>Draws a rectangular outline.</small></td>
+							</tr>
+							<tr>
+								<td><small><em>clearRect(x, y, width, height)</em></small></td>
+								<td><small>Clears the specified rectangular area, making it fully transparent.</small></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<p><small>Each of these three functions takes the same parameters.<br />
+									<em>x</em> and <em>y</em> specify the position on the canvas (relative to the origin) of the top-left corner of the rectangle.<br />
+									<em>width</em> and <em>height</em> provide the rectangle's size.</small></p>
+									<p><small>All 3 functions draw a rectangle immediately on the canvas.</small></p>
+								</td>
+							</tr>
+						</table>
+						
+					</section>
+					<section>
+						<h2>Example</h2>
+						<pre class="fragment roll-in">
+						<code>
+<canvas id="canvas" width="150" height="150"></canvas>
+<script type="text/javascript">
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillRect(25,25,100,100);
+    ctx.clearRect(45,45,60,60);
+    ctx.strokeRect(50,50,50,50);
+  }
+}
+</script>            				
+						</code>
+						</pre>
+						<p class="fragment roll-in">
+							<canvas id="rectangle-shape" width="150" height="150" style="background: #fff;"></canvas>
+							<script type="text/javascript">
+							function drawRectangle() {
+							  var canvas = document.getElementById('rectangle-shape');
+							  if (canvas.getContext) {
+								var ctx = canvas.getContext('2d');
+
+								ctx.fillRect(25,25,100,100);
+								ctx.clearRect(45,45,60,60);
+								ctx.strokeRect(50,50,50,50);
+							  }
+							}
+							
+							</script> 
+							<small>The <em>fillRect()</em> function draws a large black square 100 pixels on each side. The <em>clearRect()</em> function then erases a 60x60 pixel square from the center, and then <em>strokeRect()</em> is called to create a rectangular outline 50x50 pixels within the cleared square.</small>
+						</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Circles</h2>
+						<p><small>To draw arcs or circles, we use the arc() method. </small></p>
+						<table cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="60%"><small><em>arc(x, y, radius, startAngle, endAngle, anticlockwise)</em></small></td>
+								<td width="40%"><small>Draws an arc.</small></td>
+							</tr>
+							<tr>
+								<td colspan="2"><p><small><em>x</em> and <em>y</em> are the coordinates of the center of the circle on which the arc should be drawn.<br /><em>radius</em> is self-explanatory.<br />
+								The <em>startAngle</em> and <em>endAngle</em> parameters define the start and end points of the arc in radians, along the curve of the circle. These are measured from the x axis.<br />
+								The <em>anticlockwise</em> parameter is a Boolean value which, when true, draws the arc anticlockwise; otherwise, the arc is drawn clockwise.</small></p>
+								<p><small>Angles in the arcfunction are measured in radians, not degrees. To convert degrees to radians you can use the following JavaScript expression: <em>radians = (Math.PI/180)*degrees.</em></small></p></td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h2>Example</h2>
+						<pre class="fragment roll-in">
+						<code>
+<canvas id="canvas" width="150" height="150"></canvas>
+<script type="text/javascript">
+function draw() {
+	var canvas = document.getElementById('canvas');
+	if (canvas.getContext) {
+		var ctx = canvas.getContext('2d');
+
+		ctx.beginPath();
+		ctx.arc(75,75,50,0,Math.PI*2,true);
+		ctx.stroke(); // if we want a filled circle use ctx.fill()
+	}
+}
+</script>      
+						</code>
+						</pre>
+						<p class="fragment roll-in">
+							<canvas id="circle-shape" width="300" height="150" style="background: #fff;"></canvas>
+							<script type="text/javascript">
+							function drawCircle() {
+							  var canvas = document.getElementById('circle-shape');
+							  if (canvas.getContext) {
+								var ctx = canvas.getContext('2d');
+
+								ctx.beginPath();
+								ctx.arc(75,75,50,0,Math.PI*2,true);
+								ctx.stroke();
+								ctx.moveTo(225, 75);
+								ctx.beginPath();
+								ctx.arc(225,75,50,0,Math.PI*2,true);
+								ctx.fill();
+							  }
+							}
+							</script>
+						</p>
+						<p><small>The first circle uses <em>stroke()</em>. The second one uses <em>fill()</em>.</small></p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Drawing lines</h2>
+						<p><small>We can draw simple <span style="text-decoration: underline;">linear lines,</span> <span style="text-decoration: underline;">bezier curves</span> and <span style="text-decoration: underline;">other complex forms</span> using path functions.</small></p>
+						<p><small>Before we start, there are a few methods used in drawing and manipulating lines, as well as rectangles and arcs. These methods allow drawing multiple lines and shapes in the same canvas, resulting in complex images.</small></p>
+					</section>
+					<section>
+						<h2><span style="text-transform: lowercase;">begin</span>P<span style="text-transform: lowercase;">ath</span>()</h2>
+						<p><small>First thing when we start drawing shapes, we have to call the <em>beginPath()</em>.<br/>
+						Internally, paths are stored as a list of sub-paths (lines, arcs, etc) which together form a shape.<br />
+						Every time this method is called, the list is reset and we can start drawing new shapes.</small></p>
+						<pre class="fragment roll-in">
+							<code>
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+	// draw shapes methods
+	}
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2><span style="text-transform: lowercase;">close</span>P<span style="text-transform: lowercase;">ath</span>() VS <span style="text-transform: lowercase;">fill</span>()</h2>
+						<p class="fragment roll-in"><small><em>closePath()</em> is optional and tries to close the shape by drawing a straight line from the current point to the start. If the shape has already been closed or there's only one point in the list, this function does nothing.</small></p>
+						<p class="fragment roll-in"><small>Alternatively we can use <em>fill()</em>. This function automatically closes the path and also fills in the shape with color or patterns. When you call <em>fill()</em>, any open shapes are closed automatically, so you don't have to call <em>closePath()</em>.</small></p>
+						<pre class="fragment roll-in">
+						<code>
+function draw() {
+	var canvas = document.getElementById('canvas');
+	if (canvas.getContext){
+		var ctx = canvas.getContext('2d');
+
+		ctx.beginPath();
+		// draw shapes methods
+		ctx.closePath();
+	}
+}						
+						</code>
+						</pre>
+					</section>
+					<section>
+						<h2><span style="text-transform: lowercase;">stroke</span>()</h2>
+						<p><small>What if we don't want a solid shape?<br />
+						We can use <em>stroke()</em> to draw an empty shape.<br />
+						<em>stroke()</em> draws the shape by stroking its outline.</small></p>
+						<pre class="fragment roll-in">
+						<code>
+function draw() {
+	var canvas = document.getElementById('canvas');
+	if (canvas.getContext){
+		var ctx = canvas.getContext('2d');
+
+		ctx.beginPath();
+		ctx.arc(75,75,50,0,Math.PI*2,true); // Draw a circle
+		ctx.stroke();
+	}
+}
+						</code>
+						</pre>
+						<p class="fragment roll-in"><small>If we don't use <em>fill()</em> nor <em>stroke()</em>, the path or shape will be completely transparent.</small></p>
+					</section>
+					<section>
+						<h2><span style="text-transform: lowercase;">move</span>T<span style="text-transform: lowercase;">o</span>()</h2>
+						<p><small>Once we've drawn a line or shape and we want to add another one to the same canvas, we have to use <em>moveTo()</em> to set a different starting point. If we don't use moveTo, the new line or shape will be considered part of the initial shape.</small></p>
+						<p class="fragment roll-in">
+							<small><em>moveTo(x, y)</em><br />
+							Moves the starting point for a path to the coordinates specified by x and y.</small>
+						</p>
+					</section>
+					<section>
+						<h2>Example</h2>
+						<pre class="fragment roll-in">
+						<code contenteditable>
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.arc(75,75,50,0,Math.PI*2,true); // Draw a circle
+    ctx.moveTo(110,75);
+    ctx.arc(75,75,35,0,Math.PI,false);   // Draw 2nd circle
+    ctx.moveTo(65,65);
+    ctx.arc(60,65,5,0,Math.PI*2,true);  // Draw 3rd circle
+    ctx.moveTo(95,65);
+    ctx.arc(90,65,5,0,Math.PI*2,true);  // Draw 4th circle
+    ctx.stroke();
+  }
+}
+						</code>
+						</pre>
+						<p class="fragment roll-in">
+							<canvas id="smiley-shape" width="300" height="150" style="background: #fff;"></canvas>
+							<script type="text/javascript">
+							function drawSmiley() {
+							  var canvas = document.getElementById('smiley-shape');
+							  if (canvas.getContext) {
+								var ctx = canvas.getContext('2d');
+
+								ctx.beginPath();
+								ctx.arc(75,75,50,0,Math.PI*2,true); // Draw a circle
+								ctx.moveTo(110,75);
+								ctx.arc(75,75,35,0,Math.PI,false);   // Draw 2nd circle
+								ctx.moveTo(65,65);
+								ctx.arc(60,65,5,0,Math.PI*2,true);  // Draw 3rd circle
+								ctx.moveTo(95,65);
+								ctx.arc(90,65,5,0,Math.PI*2,true);  // Draw 4th circle
+								ctx.stroke();
+								
+								ctx.moveTo(260,75);
+								ctx.beginPath();								
+								ctx.arc(225,75,50,0,Math.PI*2,true); // Draw a circle
+								//ctx.moveTo(260,75);
+								ctx.arc(225,75,35,0,Math.PI,false);   // Draw 2nd circle
+								//ctx.moveTo(215,65);
+								ctx.arc(210,65,5,0,Math.PI*2,true);  // Draw 3rd circle
+								//ctx.moveTo(245,65);
+								ctx.arc(240,65,5,0,Math.PI*2,true);  // Draw 4th circle
+								ctx.stroke();
+							  }
+							}
+							</script>
+						</p>
+					</section>
+					<section>
+						<h2>Bezier curves</h2>
+						<table cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="40%"><small><em>quadraticCurveTo(cp1x, cp1y, x, y)</em></small></td>
+								<td width="60%"><small>Draws a quadratic B&#233;zier curve from the current position to the end point specified by x and y, using the control point specified by cp1x and cp1y.</small></td>
+							</tr>
+							<tr>
+								<td width="40%"><small><em>bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)</em></small></td>
+								<td width="60%"><small>Draws a cubic B&#233;zier curve from the current position to the end point specified by x and y, using the control points specified by (cp1x, cp1y) and (cp2x, cp2y).</small></td>
+							</tr>
+							<tr>
+								<td colspan="2"><p><small>The difference between a quadratic B&#233;zier curve and a cubic B&#233;zier curve is that the quadratic curve has just one control point while a cubic B&#233;zier curve uses two control points.</small></p>
+								<p><small>The x and y parameters in both of these methods are the coordinates of the end point.</em></small></p></td>
+							</tr>
+						</table>
+						<script>
+function drawCubicCurve() {	
+    var canvas=document.getElementById("curve-cubic-canvas");
+    var ctx=canvas.getContext("2d");
+    ctx.lineWidth=8;
+    ctx.lineCap="round";
+	ctx.clearRect(0,0,150,225);
+	ctx.beginPath();
+	ctx.moveTo(30,200);
+	ctx.lineTo(30,50);
+	ctx.lineTo(65,50);
+	ctx.moveTo(30,120);
+	ctx.lineTo(65,120);
+	ctx.lineTo(100,200);
+	ctx.strokeStyle="black";
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.moveTo(65,50);
+	ctx.bezierCurveTo(120,50,120,120,65,120);
+	ctx.strokeStyle="red";
+	ctx.stroke();
+}
+function drawQuadCurve() {	
+    var canvas=document.getElementById("curve-quad-canvas");
+    var ctx=canvas.getContext("2d");
+    ctx.lineWidth=8;
+    ctx.lineCap="round";
+	ctx.clearRect(0,0,150,225);
+	ctx.beginPath();
+	ctx.moveTo(30,200);
+	ctx.lineTo(30,50);
+	ctx.lineTo(65,50);
+	ctx.moveTo(30,120);
+	ctx.lineTo(65,120);
+	ctx.lineTo(100,200);
+	ctx.strokeStyle="black";
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.moveTo(65,50);
+	ctx.quadraticCurveTo(130,85,65,120);
+	ctx.strokeStyle="red";
+	ctx.stroke();
+}
+
+</script>
+<canvas id="curve-quad-canvas" width="150" height="225"></canvas>
+<canvas id="curve-cubic-canvas" width="150" height="225"></canvas>
+<p><small>Quadratic curve</small> | <small>Cubic curve</small></p>
+					</section>
+					<section>
+						<h2>Draw a heart</h2>
+						<pre clas="fragment roll-in">
+						<code>
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+
+    // Quadratric curves example
+    ctx.beginPath();
+    ctx.moveTo(75,40);
+    ctx.bezierCurveTo(75,37,70,25,50,25);
+    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+    ctx.bezierCurveTo(20,80,40,102,75,120);
+    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+    ctx.bezierCurveTo(85,25,75,37,75,40);
+    ctx.fill();
+  }
+}
+						</code>
+						</pre>
+						<p class="fragment roll-in">
+							<canvas id="canvas-heart" width="150" height="150" style="background: #fff;"></canvas>
+							<script type="text/javascript">
+							function drawHeart() {
+  var canvas = document.getElementById('canvas-heart');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+
+    // Quadratric curves example
+    ctx.beginPath();
+    ctx.moveTo(75,40);
+    ctx.bezierCurveTo(75,37,70,25,50,25);
+    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+    ctx.bezierCurveTo(20,80,40,102,75,120);
+    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+    ctx.bezierCurveTo(85,25,75,37,75,40);
+    ctx.fill();
+  }
+}
+							</script>
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Colors and gradients</h2>
+						<h3>Colors</h3>
+						<table cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="40%"><small><em>fillStyle = color</em></small></td>
+								<td width="60%"><small>Sets the style used when filling shapes.</small></td>
+							</tr>
+							<tr>
+								<td width="40%"><small><em>strokeStyle = color</em></small></td>
+								<td width="60%"><small>Sets the style for shapes' outlines.</small></td>
+							</tr>
+							<tr>
+								<td colspan="2"><p><small>Possible color values: <em>"orange"</em>, <em>"#FFA500"</em>, <em>"rgb(255,165,0)"</em>, <em>"rgba(255,165,0,1)"</em></small></p></td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Red heart</h3>
+						<pre>
+						<code>
+function drawRedHeart() {
+  var canvas = document.getElementById('red-heart');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(75,40);
+    ctx.bezierCurveTo(75,37,70,25,50,25);
+    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+    ctx.bezierCurveTo(20,80,40,102,75,120);
+    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+    ctx.bezierCurveTo(85,25,75,37,75,40);
+	ctx.fillStyle = "red";
+	ctx.strokeStyle = "#000000";
+    ctx.fill();
+	ctx.stroke();
+  }
+}
+						</code>
+						</pre>
+						<p class="fragment roll-in">
+							<canvas id="red-heart" width="150" height="150" style="background: #fff;"></canvas>
+							<script type="text/javascript">
+							function drawRedHeart() {
+  var canvas = document.getElementById('red-heart');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(75,40);
+    ctx.bezierCurveTo(75,37,70,25,50,25);
+    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+    ctx.bezierCurveTo(20,80,40,102,75,120);
+    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+    ctx.bezierCurveTo(85,25,75,37,75,40);
+	ctx.fillStyle = "red";
+	ctx.strokeStyle = "#000000";
+    ctx.fill();
+	ctx.stroke();
+  }
+}
+							</script>
+						</p>
+					</section>
+					
+					<section>
+						<h3>Transparency</h3>
+						<pre>
+						<code>
+function drawRedHeart() {
+  var canvas = document.getElementById('red-heart');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+	ctx.fillStyle = "blue";
+	ctx.fillRect(50,50,100,50);
+	
+    ctx.beginPath();
+    ctx.moveTo(75,40);
+    ctx.bezierCurveTo(75,37,70,25,50,25);
+    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+    ctx.bezierCurveTo(20,80,40,102,75,120);
+    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+    ctx.bezierCurveTo(85,25,75,37,75,40);
+	ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+	ctx.strokeStyle = "#000000";
+    ctx.fill();
+	ctx.stroke();
+  }
+}
+						</code>
+						</pre>
+						<p class="fragment roll-in">
+							<canvas id="pink-heart" width="250" height="150" style="background: #fff;"></canvas>
+							<script type="text/javascript">
+							function drawPinkHeart() {
+  var canvas = document.getElementById('pink-heart');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+	ctx.fillStyle = "blue";
+	ctx.fillRect(50,50,100,50);
+	
+    ctx.beginPath();
+    ctx.moveTo(75,40);
+    ctx.bezierCurveTo(75,37,70,25,50,25);
+    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+    ctx.bezierCurveTo(20,80,40,102,75,120);
+    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+    ctx.bezierCurveTo(85,25,75,37,75,40);
+	ctx.fillStyle = "rgba(255,0,0,0.5)";
+	ctx.strokeStyle = "#000000";
+    ctx.fill();
+	ctx.stroke();
+  }
+}
+							</script>
+						</p>
+					</section>
+					
+					<section>
+						<h3>Line styles</h3>
+						<table cellspacing="0" cellpadding="0" rules="rows">
+							<tr>
+								<td width="30%"><small><em>lineWidth = value</em></small></td>
+								<td width="70%"><small>Sets the widths of lines drawn in the future.</small></td>
+							</tr>
+							<tr>
+								<td><small><em>lineCap = type</em></small></td>
+								<td><small>Sets the appearance of the ends of lines. It can be <em>butt</em>, <em>round</em>, <em>square</em>.</small></td>
+							</tr>
+							<tr>
+								<td><small><em>lineJoin = type</em></small></td>
+								<td><small>Sets the apperance of the "corners" where lines meet. It can be <em>round</em>, <em>bevel</em>, <em>miter</em>.</small></td>
+							</tr>
+							<tr>
+								<td><small><em>miterLimit = value</em></small></td>
+								<td><small>Establishes a limit on the miter when two lines join at a sharp angle, to let you control how thick the junction becomes.</small></td>
+							</tr>
+						</table>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+					<h2>Gradients</h2>
+					<table cellspacing="0" cellpadding="0" rules="rows">
+						<tr>
+							<td width="30%"><small><em>createLinearGradient(x1, y1, x2, y2)</em></small></td>
+							<td width="70%"><small>Creates a linear gradient object with a starting point of (<em>x1</em>, <em>y1</em>) and an end point of (<em>x2</em>, <em>y2</em>).</small></td>
+						</tr>
+						<tr>
+							<td><small><em>createRadialGradient(x1, y1, r1, x2, y2, r2)</em></small></td>
+							<td><small>Creates a radial gradient. The parameters represent two circles, one with its center at (<em>x1</em>, <em>y1</em>) and a radius of r1, and the other with its center at (<em>x2</em>, <em>y2</em>) with a radius of r2.</small></td>
+						</tr>
+						<tr>
+							<td width="30%"><small><em>gradient.addColorStop(position, color)</em></small></td>
+							<td width="70%"><small>Creates a new color stop on the gradient object. The position is a number between 0.0 and 1.0. You can add as many color stops as you want.</small></td>
+						</tr>
+					</table>
+					</section>
+					<section>
+						<h3>Example</h3>
+						<pre>
+						<code>
+
+function drawGradientHeart() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext){
+	var ctx = canvas.getContext('2d');
+	var lineargradient = ctx.createLinearGradient(0,0,150,150);
+	lineargradient.addColorStop(0,'white');
+	lineargradient.addColorStop(1,'black');
+	
+	ctx.beginPath();
+	ctx.moveTo(75,40);
+	ctx.bezierCurveTo(75,37,70,25,50,25);
+	ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+	ctx.bezierCurveTo(20,80,40,102,75,120);
+	ctx.bezierCurveTo(110,102,130,80,130,62.5);
+	ctx.bezierCurveTo(130,62.5,130,25,100,25);
+	ctx.bezierCurveTo(85,25,75,37,75,40);
+	ctx.fillStyle = lineargradient;
+	ctx.fillStroke = "red";
+	ctx.fill();
+	ctx.stroke();
+  }
+}
+
+						</code>
+						</pre>
+						<div class="fragment roll-in">
+							
+							<canvas id="gradient-heart" width="150" height="150" style="background: #fff;"></canvas>
+							<script type="text/javascript">
+							function drawGradientHeart() {
+	  var canvas = document.getElementById('gradient-heart');
+	  if (canvas.getContext){
+		var ctx = canvas.getContext('2d');
+		var lineargradient = ctx.createLinearGradient(0,0,150,150);
+		lineargradient.addColorStop(0, 'white');
+		lineargradient.addColorStop(1, 'black');
+		
+		ctx.beginPath();
+		ctx.moveTo(75,40);
+		ctx.bezierCurveTo(75,37,70,25,50,25);
+		ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+		ctx.bezierCurveTo(20,80,40,102,75,120);
+		ctx.bezierCurveTo(110,102,130,80,130,62.5);
+		ctx.bezierCurveTo(130,62.5,130,25,100,25);
+		ctx.bezierCurveTo(85,25,75,37,75,40);
+		ctx.fillStyle = lineargradient;
+		ctx.strokeStyle = "red";
+		ctx.fill();
+		ctx.stroke();
+	  }
+	}
+							</script>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Images</h2>	
+						<p><small>We can use images from scratch using <em>new Image()</em> method or we can use images that already exist on the page by using <em>document.getElementById()</em></small></p>	
+						<pre class="fragment roll-in">
+						<code>
+var img = new Image();   // Create new img element
+img.src = 'myImage.png'; // Set source path					
+						</code>
+						</pre>
+						<div class="fragment roll-in">
+							<p><small>When this script gets executed, the image starts loading.</small></p>
+						</div>
+					</section>
+					<section>
+						<h3><span style="text-transform: lowercase;">draw</span>I<span style="text-transform: lowercase;">mage(image, x, y)</span></h3>
+						<p><small>Once the image loads, we can use <em>drawImage()</em> to render it on the canvas. Make sure the image loads before calling the method.</small></p>
+					</section>
+					<section>
+						<h3>Scaling and slicing slicing</h3>
+						<p><small>The image can also be scaled by using <em>drawImage(image, x, y, width, height)</em></small></p>
+						<p><small>the image can be sliced by using <em>drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)</em></small></p>
+					</section>
+				</section>
+				<section>
+					<h3>Patterns</h3>
+					<p>
+						<small>
+						<em>createPattern(image, "repeat")</em>
+						</small>
+					</p>
+					<pre class="fragment roll-in">
+						<code>
+function draw() {
+  var ctx = document.getElementById('canvas').getContext('2d');
+
+  // create new image object to use as pattern
+  var img = new Image();
+  img.src = 'img/pattern.png';
+  img.onload = function(){
+    // create pattern
+    var patern = ctx.createPattern(img,'repeat');
+    ctx.fillStyle = patern;
+    ctx.fillRect(0,0,150,150);
+
+  }
+}				
+						</code>
+						</pre>
+				</section>					
+				</section>
+				<section>
+					<section>
+						<h3>Text and text shadow</h3>
+						<p>
+							<small>
+							Canvas text support is actually pretty good - you can control font, size, color, horizontal alignment, vertical alignment, and you can also get text metrics to get the text width in pixels. In addition, you can also use canvas transforms to rotate, stretch and even invert text. The text can use colors or patterns.
+							</small>
+						</p>
+						<p><small>Canvas can take advantage of fonts defined in a CSS file using <em>@font-face</em>, and can fall back to multiple different fonts if the defined font is not available. It's important to know that Canvas text does not use CSS for styles.</small></p>
+					</section>
+					<section>
+						<h3>Example</h3>
+						<pre>
+							<code>
+
+function drawText() {
+  var canvas = document.getElementById('canvas-text');
+  if (canvas.getContext){
+	var ctx = canvas.getContext('2d');
+	ctx.font = "50px SapientSansLightItalic";
+	ctx.fillStyle = "#FF0000";
+	ctx.fillText ("Sapient Nitro", 50, 80);
+  }
+}
+
+							</code>
+							</pre>
+							<div class="fragment roll-in">
+								<canvas id="canvas-text" width="350" height="150" style="background: #fff;"></canvas>
+								<script type="text/javascript">
+								function drawText() {
+								  var canvas = document.getElementById('canvas-text');
+								  if (canvas.getContext){
+									var ctx = canvas.getContext('2d');
+									ctx.font = "50px SapientSansLightItalic";
+									ctx.fillStyle = "#FF0000";
+									ctx.fillText ("Sapient Nitro", 50, 80);
+								  }
+								}
+								</script>
+							</div>
+							
+					</section>
+					<section>
+						<h3>Text shadow example</h3>
+						<pre>
+							<code>
+
+function drawText() {
+  var canvas = document.getElementById('canvas-text');
+  if (canvas.getContext){
+	var ctx = canvas.getContext('2d');
+	ctx.shadowOffsetX = 2;
+	ctx.shadowOffsetY = 2;
+	ctx.shadowBlur = 2;
+	ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+	ctx.font = "50px SapientSansLightItalic";
+	ctx.fillStyle = "#FF0000";
+	ctx.fillText ("Sapient Nitro", 50, 80);
+  }
+}
+
+							</code>
+							</pre>
+							<div class="fragment roll-in">
+								<canvas id="canvas-text-shadow" width="350" height="150" style="background: #fff;"></canvas>
+								<script type="text/javascript">
+								function drawTextShadow() {
+								  var canvas = document.getElementById('canvas-text-shadow');
+								  if (canvas.getContext){
+									var ctx = canvas.getContext('2d');
+									ctx.shadowOffsetX = 2;
+									  ctx.shadowOffsetY = 2;
+									  ctx.shadowBlur = 2;
+									  ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+									ctx.font = "50px SapientSansLightItalic";
+									ctx.fillStyle = "#FF0000";
+									ctx.fillText ("Sapient Nitro", 50, 80);
+								  }
+								}
+								</script>
+							</div>
+							
+					</section>
+					<section>
+						<h3><span style="text-transform: lowercase;">measure</span>T<span style="text-transform: lowercase;">ext()</span></h3>
+						<p><small><em>measureText()</em> method will return some properties about that text, based on the current context settings (font face, size, and so on) in the form of a TextMetrics object.<br />
+						The <em>TextMetrics</em> object has only a single property: <em>width</em>. The width property of a <em>TextMetrics</em> object gives you the exact width in pixels of the text when rendered on the canvas. This can be very useful when attempting to center text.</small></p>
+					</section>
+					<section>
+						<h3>Examples</h3>
+						<p><small><a href="http://www.html5rocks.com/en/tutorials/canvas/texteffects/#toc-inner-shadow" target="_blank">http://www.html5rocks.com/en/tutorials/canvas/texteffects/</a></small></p>
+					</section>
+					<section>
+						<img src="img/text-effects.png" /> <img src="img/text-effects2.png" /> <img src="img/text-effects3.png" />
+					</section>
+				</section>
+				<section>
+					<h2>More stuff</h2>
+					<ul>
+						<li>Animations</li>
+						<li>Transformations</li>
+						<li>Compositing</li>
+						<li>Optimization</li>
+						<li>Canvas within canvas</li>
+						<li>http://html2canvas.hertzen.com/ (jquery plugin to convert html page to canvas)</li>
+					</ul>
+				</section>
+				<section>
+					<h2>References</h2>
+					<ul>
+						<li><small>http://chimera.labs.oreilly.com/books/1234000001654/ch03.html#using_measuretext</small></li>
+						<li><small>https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial</small></li>
+						<li><small>http://www.html5rocks.com/en/tutorials/canvas/texteffects/</small></li>
+						<li><small>http://stackoverflow.com/questions/18814022/what-is-the-difference-between-cubic-bezier-and-quadratic-bezier-and-their-use-c</small></li>
+					</ul>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				 parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				 parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
